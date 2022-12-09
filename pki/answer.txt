@@ -1,0 +1,25 @@
+1)
+
+If Mallory gives Alice Bob's old public key instead of the new public key,
+and then Mallory gives Cindy Bob's new public key, then Cindy can perform a
+man in the middle attack as follows.
+
+When Alice sends a message to Bob, she encrypts it with Bob's old public key.
+Cindy then intercepts this message, decrypts it, and re-encrypts it with Bob's
+new public key. Cindy then forwards this message to Bob, who uses his new private
+key to decrypt the message.
+
+No one will become suspicious because Alice has no way of knowing that she should
+use Bob's new public key because Mallory has not told her. Bob does not suspect anything
+because he recieves messages encrypted using his new public key, as expected.
+
+
+2)
+
+One countermeasure is to add a time-stamp on the certificate C. When a user wants to send
+a message, before using the public key supplied by Mallory, the user should check to see
+if the certificate was signed within the last 24 hours. If it was not, the user can assume
+that Mallory can not be trusted.
+
+This means no more than 24 hours after Bob changes his public key, Cindy can not long perform
+a man in the middle attack because the old public key is not longer valid.
