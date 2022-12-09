@@ -78,7 +78,21 @@ def egcd(b, n):
     # returns a triple (g, x, y) s.t. bx + ny = g = gcd(b, n)
     # review the extended Euclidean algorithm on Wikipedia
     # Complete for HW 2 extra credit
-    return 0
+    
+    # this is the optimized algorithm from wikipedia
+    (s, old_s, r, old_r) = (0, 1, n, b)
+
+    while r != 0:
+        quotient = old_r // r
+        (old_r, r) = (r, old_r - quotient * r)
+        (old_s, s) = (s, old_s - quotient * s)
+
+    if b != 0:
+        t = (old_r - old_s * b) // n
+    else:
+        t = 0
+    
+    return (old_r, old_s, t)
 
 def mulinv(e, n):
     # returns the multiplicative inverse of e in n
