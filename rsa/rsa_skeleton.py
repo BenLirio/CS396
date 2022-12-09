@@ -79,7 +79,7 @@ def egcd(b, n):
     # review the extended Euclidean algorithm on Wikipedia
     # Complete for HW 2 extra credit
     
-    # this is the optimized algorithm from wikipedia
+    # this is the optimized algorithm from Wikipedia
     (s, old_s, r, old_r) = (0, 1, n, b)
 
     while r != 0:
