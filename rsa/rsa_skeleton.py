@@ -74,10 +74,9 @@ def test():
 # === Below this comment is the portions of this assignment that contribute to HW 2 ===
 
 def egcd(b, n):
-    # runs the extended Euclidean algorithm on b and n
-    # returns a triple (g, x, y) s.t. bx + ny = g = gcd(b, n)
-    # review the extended Euclidean algorithm on Wikipedia
-    # Complete for HW 2 extra credit
+    if n < b: return egcd(n, b) # so that b <= n
+    assert b >= 0, "egcd only supports non-negative numbers"
+    if b == 0: return (n, 0, 1)
     
     # this is the optimized algorithm from Wikipedia
     (s, old_s, r, old_r) = (0, 1, n, b)
@@ -94,12 +93,42 @@ def egcd(b, n):
     
     return (old_r, old_s, t)
 
+def egcd_check():
+    for [a, b, c] in [
+                [2, 3, 1],
+                [12, 4, 4],
+                [7, 8, 1],
+                [0, 1, 1],
+                [1, 0, 1],
+            ]:
+        assert egcd(a, b)[0] == c, "egcd(%d, %d) != %d" % (a, b, c)
+        #assert egcd(a, b) == (c, 1, 0), \
+            #f"expected egcd({a}, {b}) to equal ({c}, 1, 0), got {egcd(a, b)}"
+
 def mulinv(e, n):
-    # returns the multiplicative inverse of e in n
-    # make use of the egcd above
-    # Complete for HW 2 extra credit
-    (g, d, t) = egcd(e, n)
-    return d
+    assert e >= 0, "mulinv only supports non-negative numbers"
+    assert n > 0, "mulinv only supports a positive modulus"
+    (_, d, _) = egcd(e, n)
+    return d%n
+
+def mulinv_check():
+    for [a, b] in [
+            [12, 4],
+            [1, 0],
+        ]:
+        try:
+            mulinv(a, b)
+            assert False, "Expected exception"
+        except:
+            pass
+    for [a, b, c] in [
+                [2, 3, 2],
+                [7, 8, 7],
+                [0, 1, 0],
+            ]:
+        assert mulinv(a, b) == c, "mulinv(%d, %d) != %d" % (a, b, c)
+
+
 
 def checkprime(n, size):
     # do not modify!
@@ -189,4 +218,7 @@ def customkeytest(text, size):
 
 if __name__ == '__main__':
     check_modexp()
+    egcd_check()
+    mulinv_check()
     test()
+    customkeytest("Foo bar baz", 8)
