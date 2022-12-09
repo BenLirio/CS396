@@ -154,7 +154,25 @@ def keygen(size):
     # return a tuple of tuples, [[n, e], [n, d]]
     # Complete this for HW 2 extra credit
     assert(size % 2 == 0 and size > 2) # keep this line!
-    return 0
+    
+    # generate two primes
+    (p, q) = (primegen(size), primegen(size))
+
+    # calculate n and phi(n)
+    (n, phi) = (calc_n(p, q), calc_phi(p, q))
+
+    # get e and d
+    while True:
+        e = random.randint(2, n - 1)
+        (g, s, t) = egcd(e, phi)
+        if g == 1:
+            d = mulinv(e, phi)
+            if d < 0:
+                d += phi
+            break
+
+    # return pair
+    return [[n, e], [n, d]]
 
 def customkeytest(text, size):
     keypair = keygen(size)
