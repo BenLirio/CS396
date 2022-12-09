@@ -27,8 +27,27 @@ public class Mac extends MacSkeleton {
      * @return          A valid tag for the message
      */
     public byte[] mac(byte[] message, Key key) {
-        // TODO
-        return null;
+        // get block size
+        int blockSz = MacSkeleton.getBlockSize();
+        // pad message
+        byte[] paddedMessage = MacSkeleton.pad(message, blockSz);
+        // generate the tag by employing CBC-MAC
+        byte[] tag = new byte[blockSz];
+        byte[] block = new byte[blockSz];
+        try {
+            // set the tag to be the encryption of the first block
+            System.arraycopy(paddedMessage, 0, block, 0, blockSz);
+            tag = MacSkeleton.encryptBlock(block, key);
+            // update tag by xoring it with the subsequent blocks and encrypting that 
+            for (int i = blockSz; i < paddedMessage.length; i+= blockSz) {
+                System.arraycopy(paddedMessage, i, block, 0, blockSz);
+                tag = MacSkeleton.encryptBlock(MacSkeleton.xor(tag, block), key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // return tag
+        return tag;
     }
 
     /**
@@ -39,8 +58,7 @@ public class Mac extends MacSkeleton {
      * @param key       secret key to authenticate the tag with
      */
     public boolean verify(byte[] message, byte[] tag, Key key) {
-        // TODO
-        return false;
+        return mac(message, key) == tag;
     }
 
 }
