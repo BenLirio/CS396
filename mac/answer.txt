@@ -3,3 +3,5 @@ of the specified default message using the specified default key.
 
 Explain which algorithm you implemented and why, and what are the domain-extension features of 
 of your algorithm in relation to its security.
+Since I needed to employ a MAC that authenticate messages of any size in a bandwidth-efficient manner, I implemented the algorithm for constructing a CBC-MAC. My implementation can take as input a message of any size by padding it to until it is a multiple of the block size. Also, my implementation of CBC-MAC only creates a tag that is the size of the block making it bandwidth-efficient. 
+The domain-extension feature of my algorithm in relation to its security is it can securely handle messages of fixed size, messages of any siize, and messages of any fixed size.
