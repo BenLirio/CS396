@@ -98,7 +98,8 @@ def mulinv(e, n):
     # returns the multiplicative inverse of e in n
     # make use of the egcd above
     # Complete for HW 2 extra credit
-    return 0
+    (g, d, t) = egcd(e, n)
+    return d
 
 def checkprime(n, size):
     # do not modify!
