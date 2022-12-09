@@ -1,0 +1,12 @@
+The RSA cryptosystem relies on modular exponentiations, as its core operations.
+1) How are such operations realized more efficiently in practice?
+
+
+2) Would you recommend choosing a small public exponent (e.g., e = 3, 5, or 7) so that at least
+message encryption and signature verification become much faster, and why?
+No, I would not recommend. Since e has to be relatively prime to phi, A smaller e reduces the 
+search space of phi which could render a brute force attack computationally feasible. For example, 
+if e = 3, then the attacker knows that phi is not divisible by 3 which reduces the search space significantly.
+If e is some larger value like 2973, then knowing that phi is not divisible by 2973 is not as useful as knowing
+phi is not divisible by 3. If the attacker is able to obtain phi through a brute force attack, then the attacker
+find the multiplicative inverse of e mod phi to get d, thus, compromising the security of the cryptosystem.
