@@ -58,7 +58,14 @@ public class Mac extends MacSkeleton {
      * @param key       secret key to authenticate the tag with
      */
     public boolean verify(byte[] message, byte[] tag, Key key) {
-        return mac(message, key) == tag;
+        // generate the tag from the message and key
+    	byte[] tag2 = mac(message, key);
+    	// check if the tag generated is the same as the tag from the sender
+    	if (tag.length != tag2.length) return false; 
+    	for (int i = 0; i < tag.length; i++) {
+    		if (tag[i] != tag2[i]) return false;
+    	}
+        return true;
     }
 
 }
