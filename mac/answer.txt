@@ -1,5 +1,6 @@
 Demonstrate that mac() and verify() are correct by providing the MAC tag (in hexadecimal)
 of the specified default message using the specified default key.
+tag: 29BA1525FA2E2E390574CEAB96BF3F3F
 
 Explain which algorithm you implemented and why, and what are the domain-extension features of 
 of your algorithm in relation to its security.
