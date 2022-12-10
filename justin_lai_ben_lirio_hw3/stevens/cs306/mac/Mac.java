@@ -1,6 +1,7 @@
 package stevens.cs306.mac;
 
 import java.security.Key;
+import java.util.Arrays;
 
 // Implement this class
 public class Mac extends MacSkeleton {
@@ -58,7 +59,7 @@ public class Mac extends MacSkeleton {
      * @param key       secret key to authenticate the tag with
      */
     public boolean verify(byte[] message, byte[] tag, Key key) {
-        return mac(message, key) == tag;
+        return Arrays.equals(tag, mac(message, key));
     }
 
 }
